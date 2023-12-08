@@ -13,7 +13,7 @@ app.listen(port, () => {
   console.log("listening on port ", port);
 });
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.SECRET_USERNAME}:${process.env.SECRET_PASSWORD}@cluster0.2ckafac.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -32,19 +32,45 @@ async function run() {
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
 
-    // app.post("/placeOrder/:email", async (req, res) => {
-    //   const collection = client.db("bookings").collection(req.params?.email);
+    app.post("/placeOrder/:email", async (req, res) => {
+      const collection = client.db("bookings").collection(req.params?.email);
 
-    //   const result = await collection.insertOne(req.body);
-    //   res.send(result);
-    // });
-
-    app.get("/offers", async (req, res) => {
-      const data = client.db("offers").collection("collection").find();
-      const result = await data.toArray();
+      const result = await collection.insertOne(req.body);
       res.send(result);
     });
+    app.get("/orders/:email", async (req, res) => {
+      const email = req.params?.email;
 
+      const collection = client.db("bookings").collection(email);
+      const result = await collection.find().toArray();
+      res.send(result);
+
+      //  console.log(result);
+    });
+
+    app.get("/offers", async (req, res) => {
+      const collection = client.db("offers").collection("collection");
+      const result = await collection.find().toArray();
+      res.send(result);
+      //console.log(result);
+    });
+
+    app.get("/placeOrder/:id", async (req, res) => {
+      const id = req.params.id;
+      const collection = client.db("offers").collection("collection");
+      const data = await collection.findOne({ _id: new ObjectId(id) });
+      //console.log(data);
+      res.send(data);
+    });
+
+    app.delete("/orders/:email/:id", async (req, res) => {
+      const email = req.params.email;
+      const id = req.params.id;
+
+      const collection = client.db("bookings").collection(email);
+      const result = await collection.deleteOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
