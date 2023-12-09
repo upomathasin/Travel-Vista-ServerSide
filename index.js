@@ -14,7 +14,7 @@ app.listen(port, () => {
 });
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const uri = `mongodb+srv://${process.env.SECRET_USERNAME}:${process.env.SECRET_PASSWORD}@cluster0.2ckafac.mongodb.net/?retryWrites=true&w=majority`;
+const uri = process.env.MONGOURI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
