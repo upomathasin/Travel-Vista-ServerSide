@@ -9,9 +9,6 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Server is running !!!!!");
 });
-app.listen(port, () => {
-  console.log("listening on port ", port);
-});
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = process.env.SECRET_MONGOURI;
@@ -74,3 +71,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
+app.listen(port, () => {
+  console.log("listening on port ", port);
+});
