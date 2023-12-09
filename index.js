@@ -30,7 +30,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    //await client.db("admin").command({ ping: 1 });
 
     app.post("/placeOrder/:email", async (req, res) => {
       const collection = client.db("bookings").collection(req.params?.email);
