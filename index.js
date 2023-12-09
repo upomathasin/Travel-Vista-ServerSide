@@ -62,6 +62,21 @@ async function run() {
       const result = await collection.deleteOne({ _id: new ObjectId(id) });
       res.send(result);
     });
+
+    app.put("/orders/:email/:id", async (req, res) => {
+      const email = req.params.email;
+      const id = req.params.id;
+      const collection = client.db("bookings").collection(email);
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          status: "Approved",
+        },
+      };
+
+      const result = await collection.updateOne(filter, updatedDoc);
+      res.send(result);
+    });
   } finally {
   }
 }
