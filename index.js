@@ -6,15 +6,18 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Server is running !!!!!");
-});
-
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = process.env.SECRET_MONGOURI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri);
+
+app.get("/", (req, res) => {
+  res.send("Server is running !!!!!");
+});
+app.get("/hong", (req, res) => {
+  res.send("Server is running !!!!!");
+});
 
 async function run() {
   try {
@@ -62,12 +65,7 @@ async function run() {
       const result = await collection.deleteOne({ _id: new ObjectId(id) });
       res.send(result);
     });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
   } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
   }
 }
 run().catch(console.dir);
