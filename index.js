@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = 5000;
+
 app.use(cors());
 app.use(express.json());
 
@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.send("Server is running !!!!!");
 });
 app.get("/hong", (req, res) => {
-  res.send("Server is running !!!!!");
+  res.send("Server is running hong !!!!!");
 });
 
 async function run() {
@@ -69,6 +69,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-app.listen(port, () => {
-  console.log("listening on port ", port);
+app.listen(5000, () => {
+  console.log("listening on port ");
 });
