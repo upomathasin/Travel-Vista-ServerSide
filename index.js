@@ -15,9 +15,6 @@ const client = new MongoClient(uri);
 app.get("/", (req, res) => {
   res.send("Server is running !!!!!");
 });
-app.get("/hong", (req, res) => {
-  res.send("Server is running hong !!!!!");
-});
 
 async function run() {
   try {
